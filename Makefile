@@ -324,6 +324,19 @@ all:	.subdirs $(OBJS) $(OLIBS) $(OIMAGES) $(OBINS) $(SPECIAL_MKTARGETS)
 clean:
 	$(foreach d, $(SUBDIRS), $(MAKE) -C $(d) clean;)
 	$(RM) -r $(ODIR)/$(TARGET)/$(FLAVOR)
+	@echo "[INFO] Cleaning eagle image files...."
+	rm -f ../bin/eagle.*
+	@echo "[INFO] Cleaning Completed."
+	
+flash:
+	@echo "[INFO] Flashing eagle image files...."
+	../flash_mem_non_ota.sh -flash
+	@echo "[INFO] Flash Operation done."
+
+erase:
+	@echo "[INFO] Erasing Flash Memory...."
+	../flash_mem_non_ota.sh -erase
+	@echo "[INFO] Flash Erase done."
 
 clobber: $(SPECIAL_CLOBBER)
 	$(foreach d, $(SUBDIRS), $(MAKE) -C $(d) clobber;)
