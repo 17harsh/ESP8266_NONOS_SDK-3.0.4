@@ -1,1 +1,0 @@
-- move project folder to parent directory of SDK and work there
