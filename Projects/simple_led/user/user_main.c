@@ -38,6 +38,20 @@ static const partition_item_t at_partition_table[] = {
 		{SYSTEM_PARTITION_SYSTEM_PARAMETER, SYSTEM_PARTITION_SYSTEM_PARAMETER_ADDR, SYSTEM_PARTITION_SYSTEM_PARAMETER_SZ}
 };
 
+static os_timer_t osTimer;
+static int count = 0;
+
+void blinky(){
+	if(GPIO_INPUT_GET(GPIO_ID_PIN(2)) == 1){
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(2), 0);
+	}
+	else{
+		GPIO_OUTPUT_SET(GPIO_ID_PIN(2), 1);
+	}
+	os_printf("count : " + count + "\r\n");
+	count = 0;
+}
+
 void myapp(){
 	uart_init(UART_BAUD, UART_BAUD);
 	os_printf("\033[2J");
@@ -58,5 +72,7 @@ void ICACHE_FLASH_ATTR user_pre_init(void)
 void ICACHE_FLASH_ATTR user_init(void)
 {
 	system_init_done_cb(myapp);
+	os_timer_setfn(&osTimer, (os_timer_func_t*) blinky, NULL);
+	os_timer_arm(&osTimer, 1000, true);
 }
 

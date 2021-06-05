@@ -22,7 +22,7 @@ GEN_IMAGES= eagle.app.v6.out
 GEN_BINS= eagle.app.v6.bin
 SPECIAL_MKTARGETS=$(APP_MKTARGETS)
 SUBDIRS=    \
-    user
+    user driver
 
 endif # } PDIR
 
@@ -46,7 +46,7 @@ ifeq ($(FLAVOR),release)
 endif
 
 COMPONENTS_eagle.app.v6 = \
-    user/libuser.a
+    user/libuser.a driver/libdriver.a
 
 LINKFLAGS_eagle.app.v6 = \
     -L../lib        \
@@ -118,4 +118,6 @@ sinclude $(PDIR)Makefile
 
 .PHONY: FORCE
 FORCE:
-	
+
+#for easy copy
+#make COMPILE=gcc BOOT=none APP=0 SPI_SPEED=40 SPI_MODE=QIO SPI_SIZE_MAP=4
